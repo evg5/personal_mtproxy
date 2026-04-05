@@ -111,6 +111,8 @@ let you update running business logic code, in-memory state and configuration at
 connections stay alive across the upgrade — essential for a production proxy
 where restarting disconnects thousands of users.
 
+![Architecture](architecture.svg)
+
 ---
 
 ## SNI, Fake-TLS, and How Secrets Encode Domains
@@ -282,6 +284,8 @@ To address both cons, we built a small sample demo application that:
 The full source is at: https://github.com/seriyps/personal_mtproxy
 
 The demo instance is currently running at https://demo.personal-mtp.online/admin.html
+
+![WEB UI](ui-screenshot.png)
 
 ### Architecture and domain fronting
 
@@ -532,4 +536,5 @@ choices — OTP application structure, gen_server for serialized state access,
 DETS for dependency-free persistence, Cowboy for HTTPS — all pull from the
 standard Erlang/OTP toolkit with minimal external dependencies.
 
-The full source is at: https://github.com/seriyps/personal_mtproxy
+The full source https://github.com/seriyps/personal_mtproxy
+The live demo https://demo.personal-mtp.online/admin.html

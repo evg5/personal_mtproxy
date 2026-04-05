@@ -1,0 +1,263 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 800" font-family="'Fira Code','Courier New',monospace">
+<defs>
+  <marker id="ar"  viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#374151"/></marker>
+  <marker id="arb" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#2563eb"/></marker>
+  <marker id="arv" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#7c3aed"/></marker>
+  <marker id="arg" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#16a34a"/></marker>
+</defs>
+
+<rect width="1100" height="800" fill="#f8fafc"/>
+
+<!-- ════════════════════════════════════════════════════════
+     STRUCTURAL SECTION  (3 columns)
+     Col 1: handlers   x=10–195
+     Col 2: pool subtrees (DC1 above DC2)  x=285–460
+     Col 3: Telegram   x=580–720
+     ════════════════════════════════════════════════════════ -->
+
+<text x="370" y="26" text-anchor="middle" font-size="14" fill="#0f172a" font-weight="bold">Структура процессов</text>
+
+<!-- ── COL 1: HANDLERS ── -->
+<text x="103" y="42" text-anchor="middle" font-size="9" fill="#64748b">client_conn</text>
+
+<!-- H1 DC1 (cy=64) -->
+<rect x="10" y="48" width="185" height="32" rx="5" fill="#dbeafe" stroke="#3b82f6" stroke-width="1.5"/>
+<text x="88"  y="68" text-anchor="middle" font-size="10" fill="#1e3a8a" font-weight="bold">client_conn</text>
+<rect x="149" y="52" width="44" height="24" rx="3" fill="#3b82f6"/>
+<text x="171" y="68" text-anchor="middle" font-size="8" fill="white" font-weight="bold">→ DC 1</text>
+
+<!-- H2 DC1 (cy=102) -->
+<rect x="10" y="86" width="185" height="32" rx="5" fill="#dbeafe" stroke="#3b82f6" stroke-width="1.5"/>
+<text x="88"  y="106" text-anchor="middle" font-size="10" fill="#1e3a8a" font-weight="bold">client_conn</text>
+<rect x="149" y="90"  width="44" height="24" rx="3" fill="#3b82f6"/>
+<text x="171" y="106" text-anchor="middle" font-size="8" fill="white" font-weight="bold">→ DC 1</text>
+
+<!-- H3 DC2 (cy=140) -->
+<rect x="10" y="124" width="185" height="32" rx="5" fill="#f3e8ff" stroke="#9333ea" stroke-width="1.5"/>
+<text x="88"  y="144" text-anchor="middle" font-size="10" fill="#3b0764" font-weight="bold">client_conn</text>
+<rect x="149" y="128" width="44" height="24" rx="3" fill="#9333ea"/>
+<text x="171" y="144" text-anchor="middle" font-size="8" fill="white" font-weight="bold">→ DC 2</text>
+
+<!-- H4 DC2 (cy=178) -->
+<rect x="10" y="162" width="185" height="32" rx="5" fill="#f3e8ff" stroke="#9333ea" stroke-width="1.5"/>
+<text x="88"  y="182" text-anchor="middle" font-size="10" fill="#3b0764" font-weight="bold">client_conn</text>
+<rect x="149" y="166" width="44" height="24" rx="3" fill="#9333ea"/>
+<text x="171" y="182" text-anchor="middle" font-size="8" fill="white" font-weight="bold">→ DC 2</text>
+
+<!-- H5 DC1 (cy=216) -->
+<rect x="10" y="200" width="185" height="32" rx="5" fill="#dbeafe" stroke="#3b82f6" stroke-width="1.5"/>
+<text x="88"  y="220" text-anchor="middle" font-size="10" fill="#1e3a8a" font-weight="bold">client_conn</text>
+<rect x="149" y="204" width="44" height="24" rx="3" fill="#3b82f6"/>
+<text x="171" y="220" text-anchor="middle" font-size="8" fill="white" font-weight="bold">→ DC 1</text>
+
+<!-- H6 DC2 (cy=254) -->
+<rect x="10" y="238" width="185" height="32" rx="5" fill="#f3e8ff" stroke="#9333ea" stroke-width="1.5"/>
+<text x="88"  y="258" text-anchor="middle" font-size="10" fill="#3b0764" font-weight="bold">client_conn</text>
+<rect x="149" y="242" width="44" height="24" rx="3" fill="#9333ea"/>
+<text x="171" y="258" text-anchor="middle" font-size="8" fill="white" font-weight="bold">→ DC 2</text>
+
+<text x="103" y="283" text-anchor="middle" font-size="10" fill="#94a3b8" font-style="italic">⋮  (N процессов)</text>
+
+<!-- ── COL 2: DC1 SUBTREE (center_x=373) ── -->
+<text x="373" y="42" text-anchor="middle" font-size="9" fill="#64748b">dc_pool  DC 1</text>
+
+<rect x="285" y="48" width="175" height="42" rx="5" fill="#fef3c7" stroke="#f59e0b" stroke-width="2"/>
+<text x="373" y="67" text-anchor="middle" font-size="11" fill="#78350f" font-weight="bold">dc_pool</text>
+<text x="373" y="81" text-anchor="middle" font-size="10" fill="#78350f">DC 1</text>
+
+<!-- supervision spine DC1: pool bottom → last down_conn bottom -->
+<line x1="373" y1="90" x2="373" y2="208" stroke="#94a3b8" stroke-width="1.2" stroke-dasharray="4,3"/>
+
+<!-- DC1 down_conns (cy: A=122, B=158, C=194) -->
+<rect x="285" y="108" width="175" height="28" rx="5" fill="#dcfce7" stroke="#22c55e" stroke-width="1.5"/>
+<text x="373" y="126" text-anchor="middle" font-size="9" fill="#14532d" font-weight="bold">dc_conn A</text>
+
+<rect x="285" y="144" width="175" height="28" rx="5" fill="#dcfce7" stroke="#22c55e" stroke-width="1.5"/>
+<text x="373" y="162" text-anchor="middle" font-size="9" fill="#14532d" font-weight="bold">dc_conn B</text>
+
+<rect x="285" y="180" width="175" height="28" rx="5" fill="#dcfce7" stroke="#22c55e" stroke-width="1.5"/>
+<text x="373" y="198" text-anchor="middle" font-size="9" fill="#14532d" font-weight="bold">dc_conn C</text>
+
+<text x="373" y="222" text-anchor="middle" font-size="13" fill="#86efac">⋮</text>
+
+<!-- ── COL 2: DC2 SUBTREE (stacked below DC1) ── -->
+<!-- thin separator -->
+<line x1="285" y1="238" x2="460" y2="238" stroke="#e2e8f0" stroke-width="1"/>
+
+<text x="373" y="252" text-anchor="middle" font-size="9" fill="#64748b">dc_pool  DC 2</text>
+
+<rect x="285" y="258" width="175" height="42" rx="5" fill="#f3e8ff" stroke="#9333ea" stroke-width="2"/>
+<text x="373" y="277" text-anchor="middle" font-size="11" fill="#3b0764" font-weight="bold">dc_pool</text>
+<text x="373" y="291" text-anchor="middle" font-size="10" fill="#3b0764">DC 2</text>
+
+<!-- supervision spine DC2: pool bottom → last down_conn bottom -->
+<line x1="373" y1="300" x2="373" y2="382" stroke="#94a3b8" stroke-width="1.2" stroke-dasharray="4,3"/>
+
+<!-- DC2 down_conns (cy: D=329, E=365) -->
+<rect x="285" y="318" width="175" height="28" rx="5" fill="#f0fdf4" stroke="#22c55e" stroke-width="1.5"/>
+<text x="373" y="336" text-anchor="middle" font-size="9" fill="#14532d" font-weight="bold">dc_conn D</text>
+
+<rect x="285" y="354" width="175" height="28" rx="5" fill="#f0fdf4" stroke="#22c55e" stroke-width="1.5"/>
+<text x="373" y="372" text-anchor="middle" font-size="9" fill="#14532d" font-weight="bold">dc_conn E</text>
+
+<text x="373" y="394" text-anchor="middle" font-size="13" fill="#86efac">⋮</text>
+
+<!-- ── COL 3: TELEGRAM DC1 (x=580–720, y=88–208, cy=148) ── -->
+<rect x="580" y="88" width="140" height="120" rx="5" fill="#ede9fe" stroke="#8b5cf6" stroke-width="1.5"/>
+<text x="650" y="115" text-anchor="middle" font-size="12" fill="#3b0764" font-weight="bold">Telegram</text>
+<text x="650" y="133" text-anchor="middle" font-size="11" fill="#4c1d95">DC 1</text>
+<text x="650" y="160" text-anchor="middle" font-size="8" fill="#6d28d9" font-style="italic">TCP / MTP RPC</text>
+
+<!-- ── COL 3: TELEGRAM DC2 (x=580–720, y=290–385, cy=338) ── -->
+<rect x="580" y="290" width="140" height="100" rx="5" fill="#fce7f3" stroke="#db2777" stroke-width="1.5"/>
+<text x="650" y="317" text-anchor="middle" font-size="12" fill="#831843" font-weight="bold">Telegram</text>
+<text x="650" y="335" text-anchor="middle" font-size="11" fill="#9d174d">DC 2</text>
+<text x="650" y="360" text-anchor="middle" font-size="8" fill="#be185d" font-style="italic">TCP / MTP RPC</text>
+
+<!-- ── HANDLER → DOWN_CONN ARROWS ── -->
+<!-- DC1 handlers (blue) to DC1 down_conns -->
+<!-- H1 (cy=64) → down_conn A (left=285, cy=122) -->
+<path d="M195,64  C240,64  240,122 285,122" fill="none" stroke="#2563eb" stroke-width="1.4" marker-end="url(#arb)"/>
+<!-- H2 (cy=102) → down_conn A (cy=122) -->
+<path d="M195,102 C240,102 240,122 285,122" fill="none" stroke="#2563eb" stroke-width="1.4" marker-end="url(#arb)"/>
+<!-- H5 (cy=216) → down_conn B (cy=158) -->
+<path d="M195,216 C240,216 240,158 285,158" fill="none" stroke="#2563eb" stroke-width="1.4" marker-end="url(#arb)"/>
+
+<!-- DC2 handlers (purple) to DC2 down_conns — curve downward through gap -->
+<!-- H3 (cy=140) → down_conn D (left=285, cy=329) -->
+<path d="M195,140 C240,140 240,329 285,329" fill="none" stroke="#7c3aed" stroke-width="1.4" marker-end="url(#arv)"/>
+<!-- H4 (cy=178) → down_conn D (cy=329) -->
+<path d="M195,178 C240,178 240,329 285,329" fill="none" stroke="#7c3aed" stroke-width="1.4" marker-end="url(#arv)"/>
+<!-- H6 (cy=254) → down_conn E (cy=365) -->
+<path d="M195,254 C240,254 240,365 285,365" fill="none" stroke="#7c3aed" stroke-width="1.4" marker-end="url(#arv)"/>
+
+<!-- ── DOWN_CONN → TELEGRAM ARROWS ── -->
+<!-- DC1 down_conns (right=460) → Telegram DC1 (left=580, cy=148) -->
+<line x1="460" y1="122" x2="578" y2="138" stroke="#16a34a" stroke-width="1.2" marker-end="url(#arg)"/>
+<line x1="460" y1="158" x2="578" y2="150" stroke="#16a34a" stroke-width="1.2" marker-end="url(#arg)"/>
+<line x1="460" y1="194" x2="578" y2="162" stroke="#16a34a" stroke-width="1.2" marker-end="url(#arg)"/>
+
+<!-- DC2 down_conns (right=460) → Telegram DC2 (left=580, cy=338) — nearly horizontal -->
+<line x1="460" y1="329" x2="578" y2="330" stroke="#16a34a" stroke-width="1.2" marker-end="url(#arg)"/>
+<line x1="460" y1="365" x2="578" y2="350" stroke="#16a34a" stroke-width="1.2" marker-end="url(#arg)"/>
+
+<!-- ════════════════════════════════════════════════════════
+     LEGEND  (y=415–458)
+     ════════════════════════════════════════════════════════ -->
+
+<text x="10" y="420" font-size="9" fill="#64748b" font-weight="bold">Легенда:</text>
+
+<rect x="10"  y="428" width="11" height="11" rx="2" fill="#3b82f6"/>
+<text x="25"  y="438" font-size="9" fill="#475569">client_conn [mtp_handler.erl] (DC 1)</text>
+<rect x="255" y="428" width="11" height="11" rx="2" fill="#9333ea"/>
+<text x="270" y="438" font-size="9" fill="#475569">client_conn [mtp_handler.erl] (DC 2)</text>
+<rect x="500" y="428" width="11" height="11" rx="2" fill="#f59e0b"/>
+<text x="515" y="438" font-size="9" fill="#475569">dc_pool [mtp_dc_pool.erl]</text>
+<rect x="665" y="428" width="11" height="11" rx="2" fill="#22c55e"/>
+<text x="680" y="438" font-size="9" fill="#475569">dc_conn [mtp_down_conn.erl]</text>
+
+<line x1="10"  y1="454" x2="34"  y2="454" stroke="#94a3b8" stroke-width="1.2" stroke-dasharray="4,3"/>
+<text x="39"  y="458" font-size="9" fill="#475569">supervision / ownership</text>
+<line x1="210" y1="454" x2="234" y2="454" stroke="#16a34a" stroke-width="1.5" marker-end="url(#arg)"/>
+<text x="239" y="458" font-size="9" fill="#475569">data flow to Telegram</text>
+
+<!-- ════════════════════════════════════════════════════════
+     DIVIDER
+     ════════════════════════════════════════════════════════ -->
+<line x1="0" y1="474" x2="1100" y2="474" stroke="#cbd5e1" stroke-width="1" stroke-dasharray="6,3"/>
+
+<!-- ════════════════════════════════════════════════════════
+     SEQUENCE DIAGRAMS  (y=474–800)
+     ════════════════════════════════════════════════════════ -->
+
+<!-- ── SEQ 1: Getting DC connection ── -->
+<text x="275" y="492" text-anchor="middle" font-size="11" fill="#1e293b" font-weight="bold">① Получение DC-соединения (однократно при подключении)</text>
+
+<!-- participants -->
+<rect x="50"  y="500" width="100" height="30" rx="5" fill="#dbeafe" stroke="#3b82f6" stroke-width="1.5"/>
+<text x="100" y="519" text-anchor="middle" font-size="9" fill="#1e3a8a" font-weight="bold">client_conn</text>
+
+<rect x="213" y="500" width="100" height="30" rx="5" fill="#fef3c7" stroke="#f59e0b" stroke-width="1.5"/>
+<text x="263" y="519" text-anchor="middle" font-size="9" fill="#78350f" font-weight="bold">dc_pool</text>
+
+<rect x="376" y="500" width="110" height="30" rx="5" fill="#dcfce7" stroke="#22c55e" stroke-width="1.5"/>
+<text x="431" y="519" text-anchor="middle" font-size="9" fill="#14532d" font-weight="bold">dc_conn</text>
+
+<!-- lifelines -->
+<line x1="100" y1="530" x2="100" y2="770" stroke="#cbd5e1" stroke-width="1" stroke-dasharray="4,4"/>
+<line x1="263" y1="530" x2="263" y2="770" stroke="#cbd5e1" stroke-width="1" stroke-dasharray="4,4"/>
+<line x1="431" y1="530" x2="431" y2="770" stroke="#cbd5e1" stroke-width="1" stroke-dasharray="4,4"/>
+
+<!-- activation box on handler (blocking call) -->
+<rect x="97" y="549" width="6" height="108" rx="1" fill="#bfdbfe" stroke="#3b82f6" stroke-width="1"/>
+
+<!-- step 1: pool:get/3 [call] -->
+<line x1="103" y1="551" x2="259" y2="551" stroke="#1d4ed8" stroke-width="1.5" marker-end="url(#arb)"/>
+<text x="181" y="545" text-anchor="middle" font-size="8" fill="#1d4ed8">pool:get/3  [call]</text>
+
+<!-- pool internal note -->
+<rect x="222" y="567" width="82" height="16" rx="3" fill="#fef9c3" stroke="#f59e0b" stroke-width="1"/>
+<text x="263" y="579" text-anchor="middle" font-size="7" fill="#78350f" font-style="italic">выбирает min-loaded</text>
+
+<!-- step 2: upstream_new/3 [cast] pool→down_conn -->
+<line x1="267" y1="605" x2="427" y2="605" stroke="#16a34a" stroke-width="1.5" marker-end="url(#arg)"/>
+<text x="347" y="599" text-anchor="middle" font-size="8" fill="#16a34a">upstream_new/3  [cast]</text>
+
+<!-- step 3: Down pid [return] pool→handler (dashed) -->
+<line x1="259" y1="655" x2="107" y2="655" stroke="#475569" stroke-width="1.5" marker-end="url(#ar)" stroke-dasharray="5,3"/>
+<text x="181" y="649" text-anchor="middle" font-size="8" fill="#475569" font-style="italic">← Down pid  [return]</text>
+
+<!-- seq1 footer -->
+<text x="275" y="787" text-anchor="middle" font-size="8" fill="#94a3b8" font-style="italic">Handler stores Down pid; communicates directly with it from this point on</text>
+
+<!-- ── SEQ 1 / SEQ 2 divider ── -->
+<line x1="550" y1="474" x2="550" y2="795" stroke="#e2e8f0" stroke-width="1"/>
+
+<!-- ── SEQ 2: Tunnel data exchange ── -->
+<text x="825" y="492" text-anchor="middle" font-size="11" fill="#1e293b" font-weight="bold">② Обмен данными (туннельный режим)</text>
+
+<!-- participants -->
+<rect x="570" y="500" width="100" height="30" rx="5" fill="#dbeafe" stroke="#3b82f6" stroke-width="1.5"/>
+<text x="620" y="519" text-anchor="middle" font-size="9" fill="#1e3a8a" font-weight="bold">client_conn</text>
+
+<rect x="745" y="500" width="110" height="30" rx="5" fill="#dcfce7" stroke="#22c55e" stroke-width="1.5"/>
+<text x="800" y="519" text-anchor="middle" font-size="9" fill="#14532d" font-weight="bold">dc_conn</text>
+
+<rect x="925" y="500" width="110" height="30" rx="5" fill="#ede9fe" stroke="#8b5cf6" stroke-width="1.5"/>
+<text x="980" y="519" text-anchor="middle" font-size="9" fill="#3b0764" font-weight="bold">Telegram DC</text>
+
+<!-- lifelines -->
+<line x1="620" y1="530" x2="620" y2="770" stroke="#cbd5e1" stroke-width="1" stroke-dasharray="4,4"/>
+<line x1="800" y1="530" x2="800" y2="770" stroke="#cbd5e1" stroke-width="1" stroke-dasharray="4,4"/>
+<line x1="980" y1="530" x2="980" y2="770" stroke="#cbd5e1" stroke-width="1" stroke-dasharray="4,4"/>
+
+<!-- activation box on handler (blocking send/2 call) -->
+<rect x="617" y="549" width="6" height="52" rx="1" fill="#bfdbfe" stroke="#3b82f6" stroke-width="1"/>
+
+<!-- step 1: send/2 [call] handler→down_conn -->
+<line x1="623" y1="551" x2="796" y2="551" stroke="#1d4ed8" stroke-width="1.5" marker-end="url(#arb)"/>
+<text x="710" y="545" text-anchor="middle" font-size="8" fill="#1d4ed8">send/2  [call]</text>
+
+<!-- step 2: TCP write down_conn→Telegram -->
+<line x1="804" y1="580" x2="976" y2="580" stroke="#16a34a" stroke-width="1.5" marker-end="url(#arg)"/>
+<text x="890" y="574" text-anchor="middle" font-size="8" fill="#16a34a">TCP write</text>
+
+<!-- step 3: ← ok [return] send/2 returns -->
+<line x1="796" y1="599" x2="627" y2="599" stroke="#475569" stroke-width="1.2" marker-end="url(#ar)" stroke-dasharray="4,2"/>
+<text x="710" y="594" text-anchor="middle" font-size="7" fill="#94a3b8" font-style="italic">← ok  [return]</text>
+
+<!-- …later… marker -->
+<text x="793" y="628" text-anchor="end" font-size="7" fill="#94a3b8" font-style="italic">…later…</text>
+
+<!-- step 4: TCP response Telegram→down_conn (dashed) -->
+<line x1="976" y1="641" x2="808" y2="641" stroke="#475569" stroke-width="1.5" marker-end="url(#ar)" stroke-dasharray="5,3"/>
+<text x="892" y="635" text-anchor="middle" font-size="8" fill="#475569" font-style="italic">TCP response</text>
+
+<!-- step 5: proxy_ans [cast] down_conn→handler -->
+<line x1="796" y1="680" x2="628" y2="680" stroke="#16a34a" stroke-width="1.5" marker-end="url(#arg)"/>
+<text x="712" y="674" text-anchor="middle" font-size="8" fill="#16a34a">proxy_ans  [cast]</text>
+
+<!-- seq2 footer -->
+<text x="825" y="787" text-anchor="middle" font-size="8" fill="#94a3b8" font-style="italic">On disconnect: pool:return/2 → upstream_closed → counter decrement</text>
+
+</svg>

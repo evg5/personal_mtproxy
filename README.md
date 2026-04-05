@@ -6,6 +6,8 @@ Users visit a web page, optionally enter their email, and receive a personal
 MTProto proxy link on a unique subdomain (e.g. `a3f9c.demo.personal-mtp.online`).
 Subdomains are persisted in DETS and restored into the policy table on restart.
 
+![WEB UI](priv/ui-screenshot.png)
+
 ## Local development
 
 ```bash
