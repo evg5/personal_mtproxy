@@ -1,0 +1,8 @@
+-sname personal_mtproxy
+-setcookie personal_mtproxy_cookie
++K true
++A 30
++P 262144
++e 65536
++t 262144
++zdbbl 32768

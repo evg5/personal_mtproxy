@@ -1,0 +1,14 @@
+{application, personal_mtproxy, [
+  {description, "Personal MTProto Proxy: demo app with domain registration UI"},
+  {vsn, "0.1.0"},
+  {registered, [pm_registry]},
+  {mod, {personal_mtproxy_app, []}},
+  {applications, [kernel, stdlib, sasl, mtproto_proxy, cowboy, jsx]},
+  {env, [
+    {base_domain, "demo.personal-mtp.online"},
+    {dets_file, "/var/lib/personal_mtproxy/proxies.dets"},
+    {ssl_cert, "/etc/letsencrypt/live/demo.personal-mtp.online/fullchain.pem"},
+    {ssl_key, "/etc/letsencrypt/live/demo.personal-mtp.online/privkey.pem"}
+  ]},
+  {licenses, ["MIT"]}
+]}.

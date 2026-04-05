@@ -1,0 +1,19 @@
+[Unit]
+Description=Personal MTProto Proxy Demo
+After=network.target
+
+[Service]
+Type=notify
+ExecStart=/opt/personal_mtproxy/bin/personal_mtproxy foreground
+User=personal_mtproxy
+Group=personal_mtproxy
+WorkingDirectory=/var/lib/personal_mtproxy
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=personal_mtproxy
+RemainAfterExit=no
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
