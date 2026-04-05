@@ -22,7 +22,7 @@ start(_StartType, _StartArgs) ->
 
             % Determine Cowboy bind address: explicit listen_ip/listen_port
             % in personal_mtproxy config take priority; fall back to domain_fronting.
-            {CowboyIp, CowboyPort} = cowboy_listen_addr(),
+            {CowboyIp, CowboyPort, Kind} = cowboy_listen_addr(),
 
             {ok, BaseDomain} = application:get_env(?APP, base_domain),
             {ok, SslCert} = application:get_env(?APP, ssl_cert),
@@ -39,8 +39,21 @@ start(_StartType, _StartArgs) ->
               #{env => #{dispatch => routes()}}
             ),
 
-            ?LOG_INFO("Personal MTProto Proxy UI on https://~s:~p", [BaseDomain, CowboyPort]),
-            
+            ?LOG_INFO("Personal MTProto Proxy UI on https://~s:~p", [inet:ntoa(CowboyIp), CowboyPort]),
+
+            % When WEB UI is the domain-fronting target (no explicit web_listen_ip), add the base
+            % domain to the policy table so proxy fronting of BaseDomain works too
+            case Kind of
+                fronting ->
+                    {ok, [#{port := ProxyPort} | _]} = application:get_env(mtproto_proxy, ports),
+                    ?LOG_INFO("To open UI via domain fronting, use https://~s:~p",
+                              [BaseDomain, ProxyPort]),
+                    ok = mtp_policy_table:add(personal_domains, tls_domain,
+                                              list_to_binary(BaseDomain));
+                explicit ->
+                    ok
+            end,
+
             Res;
         {error, Reason} ->
             ?LOG_ERROR("mtproto_proxy port validation failed: ~p", [Reason]),
@@ -73,23 +86,20 @@ validate_mtproto_ports() ->
             {error, invalid_port_config}
     end.
 
-parse_host_port(HostPort) ->
-    case string:split(HostPort, ":") of
-        [Host, PortStr] ->
-            {ok, Ip} = inet:parse_address(Host),
-            {Ip, list_to_integer(PortStr)};
-        _ ->
-            error({badarg, invalid_domain_fronting_config, HostPort})
-    end.
-
 cowboy_listen_addr() ->
     case {application:get_env(?APP, web_listen_ip), application:get_env(?APP, web_listen_port)} of
         {{ok, Ip}, {ok, Port}} ->
             {ok, ParsedIp} = inet:parse_address(Ip),
-            {ParsedIp, Port};
+            {ParsedIp, Port, explicit};
         _ ->
             {ok, DomainFronting} = application:get_env(mtproto_proxy, domain_fronting),
-            parse_host_port(DomainFronting)
+            case string:split(DomainFronting, ":") of
+                [Host, PortStr] ->
+                    {ok, Ip} = inet:parse_address(Host),
+                    {Ip, list_to_integer(PortStr), fronting};
+                _ ->
+                    error({badarg, invalid_domain_fronting_config, DomainFronting})
+            end
     end.
 
 routes() ->

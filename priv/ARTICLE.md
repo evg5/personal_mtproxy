@@ -310,8 +310,14 @@ mtproto_proxy  (socket listeners)
 **Domain fronting** is the mechanism that makes proxy look like a legitimate HTTPS website
 for the web-browsers and DPI-probes, but serve as MTProto proxy for those who know the proxy secret.
 
-For demo purposes we will serve the registration UI on the same port 443 as the MTP proxy, with
-zero extra infrastructure, but in real setup you'd point it to some "innocent-looking" website.
+For this demo we serve the registration UI on the same port 443 as the MTP proxy — zero extra
+infrastructure, a single binary to deploy and a good example to show how fronting works.
+In a real production setup you would front an unrelated, innocent-looking public website (e.g. a
+corporate landing page or blog or add it to round-robin DNS of a real website to pump real user
+traffic through it), and serve the registration UI and API on a separate internal port or a
+completely different machine. The `personal_mtproxy` demo supports both modes via
+the `web_listen_ip` / `web_listen_port` config options.
+
 When a connection arrives and the fake-TLS handshake fails — because the client is a
 real browser or a DPI probe — `mtproto_proxy` does not close the
 connection. Instead it forwards the raw TCP stream to the configured

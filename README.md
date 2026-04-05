@@ -18,10 +18,10 @@ make dev
 make clean
 ```
 
-Then open https://demo.personal-mtp.test:1443/ in your browser
+Then open https://demo.personal-mtp.test:2443/ in your browser
 (accept the self-signed cert warning).
 
-The MTP proxy itself listens on port 4433 in local mode (no root required).
+The MTP proxy itself listens on port 2443 in local mode (no root required).
 
 ## Production build & install
 
