@@ -23,8 +23,11 @@
   {personal_mtproxy, [
     {base_domain, "demo.personal-mtp.online"},
     {dets_file,   "/var/lib/personal_mtproxy/proxies.dets"},
-    {ssl_cert,    "/etc/letsencrypt/live/demo.personal-mtp.online/fullchain.pem"},
-    {ssl_key,     "/etc/letsencrypt/live/demo.personal-mtp.online/privkey.pem"}
+    %% Paths where `make install` copies the Let's Encrypt certificate via the
+    %% certbot deploy hook.  Do not point directly at /etc/letsencrypt/live/…
+    %% — the private key there is root-only readable.
+    {ssl_cert,    "/var/lib/personal_mtproxy/fullchain.pem"},
+    {ssl_key,     "/var/lib/personal_mtproxy/privkey.pem"}
     %% Optional: bind Cowboy on a specific address instead of inheriting domain_fronting.
     %% Useful when you want to front an unrelated site and serve the UI on a separate port.
     %% {web_listen_ip,   "127.0.0.1"},
