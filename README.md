@@ -33,7 +33,10 @@ $EDITOR config/sys.config   # set base_domain, cert paths, real secret
 
 # Build release
 make
+```
+> Generate TLS certificate BEFORE starting the service (see [TLS certificate](#tls-certificate-production) section below)!
 
+```bash
 # Install to /opt/personal_mtproxy + systemd unit
 sudo make install
 sudo systemctl enable --now personal_mtproxy
