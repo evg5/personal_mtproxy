@@ -198,7 +198,7 @@ The policy for personal proxies is two rules:
 ```erlang
 {policy, [
   {in_table, tls_domain, personal_domains},
-  {max_connections, [tls_domain], 30}
+  {max_connections, [tls_domain], 8}
 ]}
 ```
 
@@ -206,9 +206,9 @@ The policy for personal proxies is two rules:
    the client's secret must exist in the `personal_domains` table. An
    unregistered domain → connection rejected.
 
-2. **`{max_connections, [tls_domain], 30}`** — at most 30 simultaneous
+2. **`{max_connections, [tls_domain], 8}`** — at most 8 simultaneous
    connections may share the same SNI domain. This limits credential sharing:
-   even if a user publishes their personal link publicly, at most 30 connections can
+   even if a user publishes their personal link publicly, at most 8 connections can
    be made at once on that domain (typical Telegram client opens up to 8 connections).
 
 Combined with `{allowed_protocols, [mtp_fake_tls]}` (only fake-TLS accepted),
@@ -243,7 +243,7 @@ add the policy to `sys.config`, then add SNI domains to the table with a shell E
   {allowed_protocols, [mtp_fake_tls]},
   {policy, [
     {in_table, tls_domain, personal_domains},
-    {max_connections, [tls_domain], 100}
+    {max_connections, [tls_domain], 8}
   ]}
 ]}
 ```
@@ -411,7 +411,7 @@ Static files (`index.html`) are served by Cowboy's built-in
     {domain_fronting, "127.0.0.1:1443"},
     {policy, [
       {in_table, tls_domain, personal_domains},
-      {max_connections, [tls_domain], 100}
+      {max_connections, [tls_domain], 8}
     ]}
   ]},
   {personal_mtproxy, [

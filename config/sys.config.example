@@ -17,7 +17,7 @@
     {domain_fronting, "127.0.0.1:1443"},
     {policy, [
       {in_table, tls_domain, personal_domains},
-      {max_connections, [tls_domain], 100}
+      {max_connections, [tls_domain], 8}
     ]}
   ]},
   {personal_mtproxy, [
@@ -27,7 +27,9 @@
     %% certbot deploy hook.  Do not point directly at /etc/letsencrypt/live/…
     %% — the private key there is root-only readable.
     {ssl_cert,    "/var/lib/personal_mtproxy/fullchain.pem"},
-    {ssl_key,     "/var/lib/personal_mtproxy/privkey.pem"}
+    {ssl_key,     "/var/lib/personal_mtproxy/privkey.pem"},
+    {admin_username, <<"admin">>},
+    {admin_password, <<"change-me">>}
     %% Optional: bind Cowboy on a specific address instead of inheriting domain_fronting.
     %% Useful when you want to front an unrelated site and serve the UI on a separate port.
     %% {web_listen_ip,   "127.0.0.1"},

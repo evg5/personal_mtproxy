@@ -21,8 +21,8 @@
 start_link() ->
     gen_server:start_link({local, ?SERVER}, ?MODULE, [], []).
 
-register(Email) ->
-    gen_server:call(?SERVER, {register, Email}).
+register(UserId) ->
+    gen_server:call(?SERVER, {register, UserId}).
 
 revoke(Subdomain) ->
     gen_server:call(?SERVER, {revoke, Subdomain}).
@@ -38,14 +38,14 @@ init([]) ->
 
     % Replay all stored subdomains into policy table
     ok = dets:foldl(
-      fun({Subdomain, _Email, _Timestamp}, ok) ->
+      fun({Subdomain, _UserId, _Timestamp}, ok) ->
               mtp_policy_table:add(personal_domains, tls_domain, Subdomain)
       end,
       ok, DetsRef),
 
     {ok, #state{dets_ref = DetsRef}}.
 
-handle_call({register, Email}, _From, State = #state{dets_ref = DetsRef}) ->
+handle_call({register, UserId}, _From, State = #state{dets_ref = DetsRef}) ->
     % Generate 5-char random hex slug with collision retry (max 5 attempts)
     case generate_slug(DetsRef, 5) of
         {error, Reason} ->
@@ -53,7 +53,7 @@ handle_call({register, Email}, _From, State = #state{dets_ref = DetsRef}) ->
         Subdomain ->
             {ok, [#{port := Port, secret := BaseSecret} | _]} = application:get_env(mtproto_proxy, ports),
             % Store in DETS
-            ok = dets:insert(DetsRef, {Subdomain, Email, erlang:system_time(second)}),
+            ok = dets:insert(DetsRef, {Subdomain, UserId, erlang:system_time(second)}),
             % Add to live policy table
             ok = mtp_policy_table:add(personal_domains, tls_domain, Subdomain),
             {reply, {ok, Subdomain, Port, BaseSecret}, State}

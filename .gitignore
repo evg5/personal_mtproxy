@@ -9,6 +9,8 @@ rebar3
 *~
 .idea/
 *.iml
+.vscode/
+AGENTS.md
 config/sys.config
 config/vm.args
 config/prod-sys.config

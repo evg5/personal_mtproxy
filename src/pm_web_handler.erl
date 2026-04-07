@@ -12,15 +12,23 @@
 -include_lib("kernel/include/logger.hrl").
 
 init(Req, State) ->
-    {Code, Body, Req1} = handle(Req),
-    Reply = cowboy_req:reply(Code, #{<<"content-type">> => <<"application/json">>}, jsx:encode(Body), Req1),
-    {ok, Reply, State}.
+    case pm_auth:ensure_authorized(Req) of
+        {ok, Req1} ->
+            {Code, Body, Req2} = handle(Req1),
+            Reply = cowboy_req:reply(Code, #{<<"content-type">> => <<"application/json">>}, jsx:encode(Body), Req2),
+            {ok, Reply, State};
+        {stop, Reply} ->
+            {ok, Reply, State}
+    end.
 
 handle(Req = #{method := <<"POST">>, path := <<"/api/proxies">>}) ->
     {ok, Body, Req1} = cowboy_req:read_body(Req),
     Params = uri_string:dissect_query(Body),
-    Email = proplists:get_value(<<"email">>, Params, <<>>),
-    case pm_registry:register(Email) of
+    UserId = case proplists:get_value(<<"user_id">>, Params) of
+                 undefined -> proplists:get_value(<<"email">>, Params, <<>>);
+                 Value -> Value
+             end,
+    case pm_registry:register(UserId) of
         {ok, Subdomain, Port, BaseSecret} ->
             {ok, BaseDomain} = application:get_env(personal_mtproxy, base_domain),
             Secret = iolist_to_binary([<<"ee">>,

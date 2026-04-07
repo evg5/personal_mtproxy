@@ -26,6 +26,10 @@ all: config/sys.config config/vm.args
 test:
 	$(REBAR3) ct
 
+.PHONY: redeploy
+redeploy:
+	./scripts/redeploy.sh
+
 config/sys.config: config/sys.config.example
 	[ -f $@ ] || cp $^ $@
 

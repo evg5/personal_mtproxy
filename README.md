@@ -2,7 +2,7 @@
 
 Demo app: [mtproto_proxy](https://github.com/seriyps/mtproto_proxy) + Cowboy + personal domain registration UI.
 
-Users visit a web page, optionally enter their email, and receive a personal
+Users visit a web page, optionally enter their user ID, and receive a personal
 MTProto proxy link on a unique subdomain (e.g. `aqfmc.demo.personal-mtp.online`).
 Subdomains are persisted in DETS and restored into the policy table on restart.
 
@@ -36,7 +36,7 @@ sudo apt install erlang-nox erlang-dev
 # Copy and edit configs
 cp config/sys.config.example config/sys.config
 cp config/vm.args.example config/vm.args
-$EDITOR config/sys.config   # set base_domain, cert paths, real secret
+$EDITOR config/sys.config   # set base_domain, cert paths, real secret, admin credentials
 
 # Build release
 make
@@ -58,4 +58,3 @@ certbot certonly --standalone -d demo.personal-mtp.online
 ```
 
 Wildcard cert (`*.demo.personal-mtp.online`) requires DNS-01 — see [article](priv/ARTICLE.md) for details.
-
