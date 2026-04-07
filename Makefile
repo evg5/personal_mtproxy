@@ -90,7 +90,7 @@ install: user $(LOGDIR) $(DATADIR)
 	else \
 	  echo ""; \
 	  echo "WARNING: No certificate found at /etc/letsencrypt/live/$(DOMAIN)/"; \
-	  echo "  Generate one first (see README for instructions), then start the service."; \
+	  echo "  Generate one first, then start the service."; \
 	  echo "  The deploy hook will copy certs automatically on every future renewal."; \
 	  echo ""; \
 	fi
