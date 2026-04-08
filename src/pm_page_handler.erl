@@ -27,8 +27,16 @@ serve_file(RelPath, ContentType, Req) ->
     FullPath = filename:join(PrivDir, RelPath),
     case file:read_file(FullPath) of
         {ok, Body} ->
-            cowboy_req:reply(200, #{<<"content-type">> => ContentType}, Body, Req);
+            cowboy_req:reply(200, no_cache_headers(#{<<"content-type">> => ContentType}), Body, Req);
         {error, enoent} ->
             cowboy_req:reply(404, #{<<"content-type">> => <<"text/plain; charset=utf-8">>},
                              <<"Not found">>, Req)
     end.
+
+no_cache_headers(Headers) ->
+    Headers#{
+      <<"cache-control">> => <<"no-store, no-cache, must-revalidate, max-age=0">>,
+      <<"pragma">> => <<"no-cache">>,
+      <<"expires">> => <<"0">>,
+      <<"vary">> => <<"authorization">>
+     }.

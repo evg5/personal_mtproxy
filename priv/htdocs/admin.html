@@ -189,6 +189,7 @@
         hx-post="/api/proxies"
         hx-swap="none"
         @submit="startCreate()"
+        @htmx:config-request.camel="addCacheBuster($event)"
         @htmx:after-request.camel="handleCreateResponse($event)"
       >
         <div>
@@ -237,6 +238,7 @@
             :disabled="isRevoking"
             :hx-delete="proxy.subdomain ? '/api/proxies?subdomain=' + encodeURIComponent(proxy.subdomain) : null"
             hx-swap="none"
+            @htmx:config-request.camel="addCacheBuster($event)"
             @htmx:before-request.camel="confirmRevoke($event)"
             @htmx:after-request.camel="handleRevokeResponse($event)"
           >
@@ -268,6 +270,14 @@
 
         startCreate() {
           this.isSubmitting = true;
+        },
+
+        addCacheBuster(event) {
+          if (!event.detail.parameters) {
+            event.detail.parameters = {};
+          }
+
+          event.detail.parameters._ts = Date.now().toString();
         },
 
         handleCreateResponse(event) {

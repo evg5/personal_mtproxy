@@ -15,7 +15,11 @@ init(Req, State) ->
     case pm_auth:ensure_authorized(Req) of
         {ok, Req1} ->
             {Code, Body, Req2} = handle(Req1),
-            Reply = cowboy_req:reply(Code, #{<<"content-type">> => <<"application/json">>}, jsx:encode(Body), Req2),
+            Reply = cowboy_req:reply(
+                      Code,
+                      no_cache_headers(#{<<"content-type">> => <<"application/json">>}),
+                      jsx:encode(Body),
+                      Req2),
             {ok, Reply, State};
         {stop, Reply} ->
             {ok, Reply, State}
@@ -65,3 +69,11 @@ handle(Req = #{method := <<"DELETE">>, path := <<"/api/proxies">>}) ->
 
 handle(Req) ->
     {404, #{error => <<"not found">>}, Req}.
+
+no_cache_headers(Headers) ->
+    Headers#{
+      <<"cache-control">> => <<"no-store, no-cache, must-revalidate, max-age=0">>,
+      <<"pragma">> => <<"no-cache">>,
+      <<"expires">> => <<"0">>,
+      <<"vary">> => <<"authorization">>
+     }.

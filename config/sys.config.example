@@ -14,6 +14,9 @@
         tag       => <<"dcbe8f1493fa4cd9ab300891c0b5b326">>}
     ]},
     {allowed_protocols, [mtp_fake_tls]},
+    %% Keep a small warm pool of downstream Telegram DC connections.
+    %% Zero makes every client fail with `pool_empty`.
+    {init_dc_connections, 2},
     {domain_fronting, "127.0.0.1:1443"},
     {policy, [
       {in_table, tls_domain, personal_domains},
